@@ -20,19 +20,27 @@ export class BeverageService {
     }
 
     async getBeverageById(beverageId): Promise<Object> {
-        return;
+        const resp = await this.http.get(`${this.apiUrl}/beverage/id/${beverageId}`).toPromise();
+        const beverage = resp.json();
+        return beverage || [];
     }
 
     async addBeverage(beverage): Promise<Object> {
-        return;
+        const resp = await this.http.post(`${this.apiUrl}/beverage`, beverage).toPromise();
+        const newBeverage = resp.json();
+        return newBeverage || null;
     }
 
-    async deleteBeverage(id): Promise<Object> {
-        return;
+    async deleteBeverage(beverageId): Promise<Object> {
+        const resp = await this.http.delete(`${this.apiUrl}/beverage/id/${beverageId}`).toPromise();
+        const status = resp.json();
+        return status;
     }
 
-    async updateBeverage(id, beverage): Promise<Object> {
-        return;
+    async updateBeverage(beverageId, beverage): Promise<Object> {
+        const resp = await this.http.put(`${this.apiUrl}/beverage/id/${beverageId}`, beverage).toPromise();
+        const updatedBeverage = resp.json();
+        return updatedBeverage;
     }
 
 }

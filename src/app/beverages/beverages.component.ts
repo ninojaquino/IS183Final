@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BeverageService } from './beverage.service';
 import { Router } from '@angular/router';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'beverages',
@@ -16,6 +17,7 @@ export class BeveragesComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.beverages = [];
     await this.getBeverages();
   }
 
@@ -28,8 +30,14 @@ export class BeveragesComponent implements OnInit {
     this.router.navigate(['beverage-create']);
   }
 
-  deleteBeverage(id: string) {
+ async deleteBeverage(id: string) {
+  const resp = await this.beverageService.deleteBeverage(id);
+    if (resp) {
+      this.beverages = this.beverages.filter((beverage) => {
+        return beverage['id'] !== id;
+      });
 
+    }
   }
 
 }
